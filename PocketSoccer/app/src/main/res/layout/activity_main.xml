@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgorund"
+    android:background="@drawable/full_backgorund"
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".MainActivity">
@@ -16,55 +16,135 @@
         <ImageView
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/logo"/>
 
     </LinearLayout>
     <!--LogoEnd___________________________________________________________________________________-->
     <!--MenuStart___________________________________________________________________________________-->
-    <HorizontalScrollView
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        card_view:cardCornerRadius="20dp"
+        android:layout_gravity="center"
+        >
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
             android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:background="@drawable/menu_background"
+            android:orientation="vertical"
+            android:padding="18dp">
 
 
-            <android.support.v7.widget.CardView android:id="@+id/card_start" style="@style/card_style">
-                <TextView
-                    android:id="@+id/info_text1"
-                    style="@style/card_text_view_style"
-                    android:text="Start Game" />
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_start"
+                style="@style/card_style">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:src="@drawable/ic_play" />
+
+                    <TextView
+                        android:id="@+id/info_text1"
+                        style="@style/card_text_view_style"
+                        android:text="Start Game" />
+
+                </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView android:id="@+id/card_resume" style="@style/card_style"
-                android:alpha="0.5">
-                <TextView
-                    android:id="@+id/info_text2"
-                    style="@style/card_text_view_style"
-                    android:text="Resume Game" />
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_resume"
+                style="@style/card_style"
+                android:alpha="0.6">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:src="@drawable/ic_pause" />
+
+                    <TextView
+                        android:id="@+id/info_text2"
+                        style="@style/card_text_view_style"
+                        android:text="Resume Game" />
+
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView android:id="@+id/card_statistics" style="@style/card_style">
-                <TextView
-                    android:id="@+id/info_text3"
-                    style="@style/card_text_view_style"
-                    android:text="Statistics" />
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_statistics"
+                style="@style/card_style">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:src="@drawable/ic_statistics" />
+
+                    <TextView
+                        android:id="@+id/info_text3"
+                        style="@style/card_text_view_style"
+                        android:text="Statistics" />
+
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView android:id="@+id/card_settings" style="@style/card_style">
-                <TextView
-                    android:id="@+id/info_text4"
-                    style="@style/card_text_view_style"
-                    android:text="Settings"
-                    />
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_settings"
+                style="@style/card_style">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:src="@drawable/ic_settings" />
+
+                    <TextView
+                        android:id="@+id/info_text4"
+                        style="@style/card_text_view_style"
+                        android:text="Settings" />
+
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
-    </HorizontalScrollView>
+    </android.support.v7.widget.CardView>
     <!--MenuEnd_____________________________________________________________________________________-->
 
 

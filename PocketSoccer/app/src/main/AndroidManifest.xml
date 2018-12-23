@@ -12,15 +12,15 @@
         <activity
             android:name=".MainActivity"
             android:label="PocketSoccer"
-            android:screenOrientation="landscape">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StatisticsActivity" android:label="Statistics" android:screenOrientation="landscape" android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".SettingsActivity" android:label="Settings" android:screenOrientation="landscape" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".StatisticsActivity" android:label="Statistics" android:screenOrientation="portrait" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".SettingsActivity" android:label="Settings" android:screenOrientation="portrait" android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
