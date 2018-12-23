@@ -1,6 +1,7 @@
 package com.example.markohudomal.pocketsoccer;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -23,6 +24,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     private static int field_res[]={R.drawable.field_grass,R.drawable.field_concrete,R.drawable.field_wood};
     private static int field_res_iter=0;
+
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
 
 
     //Views
