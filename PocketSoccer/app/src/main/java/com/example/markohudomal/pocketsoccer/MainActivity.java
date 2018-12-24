@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId())
         {
             case R.id.card_start:
-                intent.setClass(this,MainActivity.class);
+                intent.setClass(this,StartActivity.class);
                 startActivityForResult(intent,START_GAME);
                 break;
             case R.id.card_resume:
