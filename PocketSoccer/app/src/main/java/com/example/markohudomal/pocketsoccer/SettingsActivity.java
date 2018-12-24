@@ -31,9 +31,10 @@ public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     //fieldType
-    private static int field_res[]={R.drawable.field_grass,R.drawable.field_concrete,R.drawable.field_wood};
     private static int field_res_iter;
 
+    //gameEndType
+    private static int radio_res[]={R.id.radio_time,R.id.radio_score};
 
     //Views------------------------------
     //fieldType
@@ -179,15 +180,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         //fieldType
         field_res_iter=fieldType;
-        imageField.setImageResource(field_res[field_res_iter]);
+        imageField.setImageResource(StaticValues.field_res[field_res_iter]);
 
         //gameEnd
-        radioGroup.check(gameEndType);
-        if (gameEndType==R.id.radio_time)
+        radioGroup.check(radio_res[gameEndType]);
+        if (gameEndType==0)
         {
             progress_last=convertTimeToProgress(gameEndVal);
         }
-        else if (gameEndType==R.id.radio_score)
+        else if (gameEndType==1)
         {
             progress_last=convertScoreToProgress(gameEndVal);
         }
@@ -206,15 +207,15 @@ public class SettingsActivity extends AppCompatActivity {
     public void onFabLeftClick(View view)
     {
 
-        field_res_iter=(field_res_iter+field_res.length-1) % field_res.length;
-        imageField.setImageResource(field_res[field_res_iter]);
+        field_res_iter=(field_res_iter+StaticValues.field_res.length-1) % StaticValues.field_res.length;
+        imageField.setImageResource(StaticValues.field_res[field_res_iter]);
 
     }
     public void onFabRightClick(View view)
     {
 
-        field_res_iter=(field_res_iter+1) % field_res.length;
-        imageField.setImageResource(field_res[field_res_iter]);
+        field_res_iter=(field_res_iter+1) % StaticValues.field_res.length;
+        imageField.setImageResource(StaticValues.field_res[field_res_iter]);
     }
 
 
@@ -227,16 +228,17 @@ public class SettingsActivity extends AppCompatActivity {
         //Saving settings
         editor = sharedPreferences.edit();
         editor.putInt("fieldType", field_res_iter);
-        editor.putInt("gameEndType", radioGroup.getCheckedRadioButtonId());
         switch(radioGroup.getCheckedRadioButtonId())
         {
             case R.id.radio_time:
                 editor.putInt("gameEndVal", convertProgressToTime(seekBarEndGame.getProgress()));
-                Log.d("MY_LOG","Saved time: "+convertProgressToTime(seekBarSpeed.getProgress()));
+                Log.d("MY_LOG","Saved time: "+convertProgressToTime(seekBarEndGame.getProgress()));
+                editor.putInt("gameEndType", 0);
                 break;
             case R.id.radio_score:
                 editor.putInt("gameEndVal", convertProgressToScore(seekBarEndGame.getProgress()));
-                Log.d("MY_LOG","Saved score: "+convertProgressToTime(seekBarSpeed.getProgress()));
+                Log.d("MY_LOG","Saved score: "+convertProgressToScore(seekBarEndGame.getProgress()));
+                editor.putInt("gameEndType", 1);
                 break;
         }
         editor.putInt("gameSpeed", seekBarSpeed.getProgress()+1);

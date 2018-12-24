@@ -11,12 +11,14 @@ import android.support.annotation.NonNull;
 
 import java.util.Date;
 
-@Database(entities = {Order.class}, version = 2, exportSchema = false)
+@Database(entities = {Player.class,Game.class,Pair.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class MyRoomDatabase extends RoomDatabase {
     private static MyRoomDatabase singletonInstance;
 
-    public abstract OrderDao orderDao();
+    public abstract PlayerDao playerDao();
+    public abstract GameDao gameDao();
+    public abstract PairDao pairDao();
 
     public static MyRoomDatabase getDatabase(final Context context) {
         if (singletonInstance == null) {
@@ -26,9 +28,8 @@ public abstract class MyRoomDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             MyRoomDatabase.class,
                             "my_database")
-                            .fallbackToDestructiveMigration() // ako je vec pa ima neku bazu popunjenu kako ce da se migriraju podaci
-                            //.allow i neki kurac koji dozvoljava da ide iz main thread kveri al ako dugo traje ne vlaja mrtav interfejs
-                            .addCallback(sRoomDatabaseCallback) //dodavanje objekta koji moze da se izvrsi
+                            .fallbackToDestructiveMigration()
+                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
@@ -47,21 +48,32 @@ public abstract class MyRoomDatabase extends RoomDatabase {
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final OrderDao mDao;
+        private final PlayerDao playerDao;
+        private final GameDao gameDao;
+        private final PairDao pairDao;
+
         Date[] dates = {new Date(), new Date(), new Date()};
-        String[] names = {"Prva", "Druga", "Treca"};
+        String[] names = {"Marko", "Uros", "Mihailo"};
 
         PopulateDbAsync(MyRoomDatabase db) {
-            mDao = db.orderDao();
+            playerDao = db.playerDao();
+            gameDao = db.gameDao();
+            pairDao = db.pairDao();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
-            if (mDao.getAnyOrder().length < 1) {
-                for (int i = 0; i < names.length; i++) {
-                    Order order = new Order(names[i], dates[i]);
-                    mDao.insertOrder(order);
-                }
+            if ((gameDao.getAnyGame().length < 1)&&(pairDao.getAnyPair().length < 1)) {
+
+                //1vs2
+                gameDao.insertGame(new Game(names[0],names[1],3,2,new Date()));
+                gameDao.insertGame(new Game(names[0],names[1],1,0,new Date()));
+                pairDao.insertPair(new Pair(names[0],names[1],2,0));
+
+                //1vs3
+                gameDao.insertGame(new Game(names[0],names[2],1,5,new Date()));
+                gameDao.insertGame(new Game(names[2],names[0],1,2,new Date()));
+                pairDao.insertPair(new Pair(names[0],names[2],1,1));
             }
             return null;
         }

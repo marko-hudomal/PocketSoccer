@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_restore_page_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_delete_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -45,8 +45,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="C:\Users\Marko Hudomal\Desktop\soccer_ball.png" />
-                                      <entry key="outputName" value="ic_restore" />
-                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="outputName" value="ic_delete_all" />
+                                      <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="071d0e" />
                                     </map>
                                   </option>
@@ -157,6 +157,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

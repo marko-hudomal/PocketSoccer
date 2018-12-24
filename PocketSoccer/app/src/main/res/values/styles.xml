@@ -47,4 +47,21 @@
         <item name="android:padding">30dp</item>
         <item name="android:alpha">0.8</item>
     </style>
+
+    <style name="edit_text_player">
+        <item name="android:background">@drawable/edit_back</item>
+        <item name="android:textColor">@color/colorDarkGreen</item>
+        <item name="android:textColorHint">@color/colorDarkGray</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="image_view_flag">
+        <item name="android:layout_height">130dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:alpha">0.85</item>
+        <item name="android:onClick">onStartGameClick</item>
+        <item name="android:src"></item>
+        android:src="@drawable/football"
+    </style>
 </resources>

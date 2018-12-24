@@ -31,12 +31,17 @@
             android:label="Settings"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".StartActivity"
-            android:parentActivityName=".MainActivity"
+        <activity
+            android:name=".StartActivity"
             android:label="Start Game"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/StartTheme"
-           />
+            android:theme="@style/StartTheme" />
+        <activity
+            android:name=".StatisticsDuelActivity"
+            android:label="Statistics"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".GameActivity"></activity>
     </application>
 
 </manifest>
