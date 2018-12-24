@@ -83,7 +83,10 @@ public class MainActivity extends AppCompatActivity {
             click.start();
         }
         else
+        {
+            view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_shake));
             return;
+        }
 
         //Go next
         Intent intent = new Intent();
