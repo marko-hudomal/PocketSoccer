@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/paper_backgorund"
+    android:background="@drawable/settings_background"
     tools:context=".SettingsActivity">
 
     <TextView
@@ -116,7 +116,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-        android:textStyle="bold"
+            android:textStyle="bold"
             android:text="Game speed:" />
 
     <TextView
@@ -133,9 +133,66 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="3"
-        android:progress="0"
         android:thumb="@drawable/ic_speed"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_save"
+            style="@style/card_style2"
+            android:onClick="onSaveClick">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:src="@drawable/ic_save" />
+
+                <TextView
+                    android:id="@+id/info_text_save"
+                    style="@style/card_text_view_style"
+                    android:text="Save Settings" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_reset"
+            style="@style/card_style2"
+            android:onClick="onResetClick">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:src="@drawable/ic_restore" />
+
+                <TextView
+                    android:id="@+id/info_text_reset"
+                    style="@style/card_text_view_style"
+                    android:text="Reset Settings" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>
