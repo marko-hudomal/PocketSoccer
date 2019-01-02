@@ -1,28 +1,31 @@
 package com.example.markohudomal.pocketsoccer;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.markohudomal.pocketsoccer.database.Game;
-import com.example.markohudomal.pocketsoccer.database.Pair;
 import com.example.markohudomal.pocketsoccer.database.model.BundleAwareViewModelFactory;
 import com.example.markohudomal.pocketsoccer.database.model.MyViewModel;
 import com.example.markohudomal.pocketsoccer.extras.StaticValues;
 
 import java.util.Date;
-import java.util.List;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity{
+
+
+
+
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferences;
 
@@ -111,6 +114,12 @@ public class GameActivity extends AppCompatActivity {
         BundleAwareViewModelFactory<MyViewModel> factory = new BundleAwareViewModelFactory<>(savedInstanceState, provider);
         mViewModel = factory.create(MyViewModel.class);
 
+
+
+
+        //==========================================================================================
+
+        //==========================================================================================
     }
     public void TEST_saveVal(View view)
     {
@@ -150,4 +159,8 @@ public class GameActivity extends AppCompatActivity {
         Log.d("MY_LOG","here database update ends");
     }
 
+    public int getBackgorundImageId()
+    {
+        return StaticValues.field_res[settings_fieldType % StaticValues.field_res.length];
+    }
 }

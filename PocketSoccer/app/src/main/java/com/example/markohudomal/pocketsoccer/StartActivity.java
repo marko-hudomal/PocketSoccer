@@ -1,6 +1,5 @@
 package com.example.markohudomal.pocketsoccer;
 
-import android.arch.persistence.room.PrimaryKey;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,13 +10,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.example.markohudomal.pocketsoccer.extras.StaticValues;
-
-import org.w3c.dom.Text;
 
 public class StartActivity extends AppCompatActivity {
 
