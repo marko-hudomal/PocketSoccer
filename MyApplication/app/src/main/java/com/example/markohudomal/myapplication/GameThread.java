@@ -49,7 +49,7 @@ public class GameThread extends HandlerThread {
             }
             //Update on some time
             final long currentTime2 = System.currentTimeMillis();
-            if (currentTime2 - lastTime2 >= 50) {
+            if (currentTime2 - lastTime2 >= StaticValues.refreshRate) {
                 if (threadListener!=null)
                 {
                     threadListener.updateFieldState();

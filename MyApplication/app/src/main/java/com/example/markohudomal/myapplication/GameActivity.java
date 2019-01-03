@@ -28,7 +28,7 @@ public class GameActivity extends Activity implements OnTouchListener, Controlle
     //SETTINGS VALUES--------------------------
     private int settings_fieldType=0;
     private int settings_gameEndType=0;
-    private int settings_gameEndVal=100;
+    private int settings_gameEndVal=180;
     private int settings_gameSpeed=1;
 
     private String name1="Player1";
@@ -54,11 +54,13 @@ public class GameActivity extends Activity implements OnTouchListener, Controlle
         mCustomImageView.initCustomImageView(this);
         mCustomImageView.setOnTouchListener(this);
 
-        mController = new Controller(this, mCustomImageView.getGameData());
-
         //TextView
         endMessage=findViewById(R.id.endMessage);
         endMessage.setVisibility(View.GONE);
+
+        mController = new Controller(this, mCustomImageView.getGameData());
+
+
         // Gustina ekrana
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -123,7 +125,7 @@ public class GameActivity extends Activity implements OnTouchListener, Controlle
     {
 
         //Toast.makeText(this, "game is over!", Toast.LENGTH_SHORT).show();
-        //finish();
+        finish();
     }
     //=============================================================================================
 

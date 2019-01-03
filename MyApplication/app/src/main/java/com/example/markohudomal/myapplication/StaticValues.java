@@ -7,4 +7,16 @@ public class StaticValues {
     public static int SecondsTurn=5;
     public static String colorWhoPlays="#ffc04c";
     public static int endPause=3;
+
+    public static float speedChange=0.1f;
+    public static int refreshRate=10;
+    public static float scaleValue=18.0f;
+    public static float limitSpeed=40;
+
+
+    public static int playerSizeScale=6;
+    public static int footballSizeScale=10;
+
+    public static float myVectorDecipation=0.75f;
+    public static float otherVectorDecipation=0.25f;
 }

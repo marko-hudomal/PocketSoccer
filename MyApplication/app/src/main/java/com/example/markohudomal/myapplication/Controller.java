@@ -2,7 +2,9 @@ package com.example.markohudomal.myapplication;
 
 
 import android.graphics.RectF;
+import android.util.Log;
 
+import com.example.markohudomal.myapplication.gamedata.Ball;
 import com.example.markohudomal.myapplication.gamedata.GameData;
 
 public class Controller {
@@ -25,33 +27,41 @@ public class Controller {
         mViewInterface = viewInterface;
         mImageData = imageData;
 
-
     }
 
 
     public void onFirstTouchDown(float x, float y) {
         ball1_pressed=-1;
         ball2_pressed=-1;
-        for(int i=0;i<mImageData.getPlayer1_balls().size();i++)
+        if (mImageData.getPlayer_turn()==0)
         {
-            GameData.Ball temp = mImageData.getPlayer1_balls().get(i);
-            if (insideBounds(x,y,temp.mFigureHolder))
+            for(int i=0;i<mImageData.getPlayer1_balls().size();i++)
             {
-                ball1_pressed=i;
-                x_pressed=x;
-                y_pressed=y;
+                Ball temp = mImageData.getPlayer1_balls().get(i);
+                if (insideBounds(x,y,temp.mFigureHolder))
+                {
+                    ball1_pressed=i;
+                    x_pressed=x;
+                    y_pressed=y;
+                    temp.setSelected(true);
+                }
+            }
+        }else
+        {
+            for(int i=0;i<mImageData.getPlayer2_balls().size();i++)
+            {
+                Ball temp = mImageData.getPlayer2_balls().get(i);
+                if (insideBounds(x,y,temp.mFigureHolder))
+                {
+                    ball2_pressed=i;
+                    x_pressed=x;
+                    y_pressed=y;
+                    temp.setSelected(true);
+                }
             }
         }
-        for(int i=0;i<mImageData.getPlayer2_balls().size();i++)
-        {
-            GameData.Ball temp = mImageData.getPlayer2_balls().get(i);
-            if (insideBounds(x,y,temp.mFigureHolder))
-            {
-                ball2_pressed=i;
-                x_pressed=x;
-                y_pressed=y;
-            }
-        }
+
+
 
     }
 
@@ -59,21 +69,37 @@ public class Controller {
         boolean result = false;
         if (ball1_pressed!=-1)
         {
-            GameData.Ball temp = mImageData.getPlayer1_balls().get(ball1_pressed);
+            Ball temp = mImageData.getPlayer1_balls().get(ball1_pressed);
+            if (mImageData.getPlayer_turn()==0)
+            {
+                //temp.setMoving(true);
+                temp.vectorX=x-x_pressed;
+                temp.vectorY=y-y_pressed;
+                temp.scaleMyVector(StaticValues.scaleValue);
+                temp.limitMyVector(StaticValues.limitSpeed);
 
-            temp.setMoving(true);
-            temp.vectorX=x-x_pressed;
-            temp.vectorY=y-y_pressed;
-            mViewInterface.updateView();
+                Log.d("MY_LOG","2speed set="+temp.getSpeed());
+                mImageData.nextPlayer();
+                mViewInterface.updateView();
+            }
+            temp.setSelected(false);
         }
         if (ball2_pressed!=-1)
         {
-            GameData.Ball temp = mImageData.getPlayer2_balls().get(ball2_pressed);
+            Ball temp = mImageData.getPlayer2_balls().get(ball2_pressed);
+            if (mImageData.getPlayer_turn()==1)
+            {
+                //temp.setMoving(true);
+                temp.vectorX=x-x_pressed;
+                temp.vectorY=y-y_pressed;
+                temp.scaleMyVector(StaticValues.scaleValue);
+                temp.limitMyVector(StaticValues.limitSpeed);
 
-            temp.setMoving(true);
-            temp.vectorX=x-x_pressed;
-            temp.vectorY=y-y_pressed;
-            mViewInterface.updateView();
+                Log.d("MY_LOG","2speed set="+temp.getSpeed());
+                mImageData.nextPlayer();
+                mViewInterface.updateView();
+            }
+            temp.setSelected(false);
         }
         //Log.d("MY_LOG","X: ["+x_pressed+","+x+"]; Y: ["+y_pressed+","+y+"];");
         //Log.d("MY_LOG","Vector: ["+temp.vectorX+","+temp.vectorY+"]; Speed: "+temp.getSpeed());
@@ -82,7 +108,7 @@ public class Controller {
 
 
 
-    public boolean insideBounds(float x, float y, RectF bounds)
+    public static boolean insideBounds(float x, float y, RectF bounds)
     {
         boolean x_bool = x<bounds.right && x>bounds.left;
         boolean y_bool = y<bounds.bottom && y>bounds.top;

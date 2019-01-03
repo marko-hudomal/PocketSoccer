@@ -13,6 +13,7 @@ import android.os.Process;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.example.markohudomal.myapplication.gamedata.Ball;
 import com.example.markohudomal.myapplication.gamedata.GameData;
 
 
@@ -28,9 +29,10 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
     private Bitmap player2;
     private Bitmap football;
     private Bitmap scoreBoard;
-
+    private Bitmap nets;
 
     private Paint mTempPaint;
+    private Paint mAlphaPaint;
     private Rect mTempRect;
 
     private GameActivity gameActivity;
@@ -58,15 +60,21 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         mGameData = new GameData(gameActivity);
 
         mTempPaint = new Paint();
+        mAlphaPaint= new Paint();
         mTempRect = new Rect();
 
         player1= BitmapFactory.decodeResource(getResources(), StaticValues.ball_res[gameActivity.getFlag1()]);
         player2= BitmapFactory.decodeResource(getResources(), StaticValues.ball_res[gameActivity.getFlag2()]);
         scoreBoard = BitmapFactory.decodeResource(getResources(),R.drawable.score_board_plus);
         football =BitmapFactory.decodeResource(getResources(),R.drawable.ball_play);
+        nets = BitmapFactory.decodeResource(getResources(),R.drawable.nets);
+
         mThread=new GameThread("game_thread",Process.THREAD_PRIORITY_BACKGROUND);
         mThread.setListener(this);
         mThread.setRunning(true);
+    }
+    public void startThread()
+    {
         mThread.start();
     }
 
@@ -75,9 +83,14 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         super.onDraw(canvas);
 
         mTempPaint.setAlpha(1000);
-        mTempPaint.setColor(Color.WHITE);
-        mTempPaint.setStrokeWidth(6);
+        mTempPaint.setColor(Color.CYAN);
+        mTempPaint.setStrokeWidth(2);
         mTempPaint.setTextSize(50);
+
+        mAlphaPaint.setColor(Color.parseColor(StaticValues.colorWhoPlays));
+        mAlphaPaint.setStrokeWidth(2);
+        mAlphaPaint.setAlpha(100);
+
 
         getDrawingRect(mTempRect);
         canvas.getClipBounds(mTempRect);
@@ -85,20 +98,33 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         //BALLS-------------------------------------------------------------------------------------
         for(int i=0;i<mGameData.getPlayer1_balls().size();i++)
         {
-            GameData.Ball temp = mGameData.getPlayer1_balls().get(i);
+            Ball temp = mGameData.getPlayer1_balls().get(i);
             //canvas.drawCircle(temp.getFigureHolder().left, temp.getFigureHolder().top,(mTempRect.bottom-mTempRect.top)/15, mTempPaint);
+
             canvas.drawBitmap(player1, null, temp.getFigureHolder(), mTempPaint);
+            if (temp.isSelected()) {
+                canvas.drawCircle(temp.getFigurePosition().x,temp.getFigurePosition().y,temp.radius/2+5,mAlphaPaint);
+            }
+
+
+            canvas.drawLine(temp.getFigurePosition().x,temp.getFigurePosition().y,temp.getFigurePosition().x+temp.vectorX*5,temp.getFigurePosition().y+temp.vectorY*5,mTempPaint);
         }
         for(int i=0;i<mGameData.getPlayer2_balls().size();i++)
         {
-            GameData.Ball temp = mGameData.getPlayer2_balls().get(i);
+            Ball temp = mGameData.getPlayer2_balls().get(i);
             //canvas.drawCircle(temp.getFigureHolder().left, temp.getFigureHolder().top,(mTempRect.bottom-mTempRect.top)/15, mTempPaint);
+
             canvas.drawBitmap(player2, null, temp.getFigureHolder(), mTempPaint);
+            if (temp.isSelected()) {
+                canvas.drawCircle(temp.getFigurePosition().x,temp.getFigurePosition().y,temp.radius/2+5,mAlphaPaint);
+            }
+            canvas.drawLine(temp.getFigurePosition().x,temp.getFigurePosition().y,temp.getFigurePosition().x+temp.vectorX*5,temp.getFigurePosition().y+temp.vectorY*5,mTempPaint);
         }
         canvas.drawBitmap(football, null, mGameData.getFootball().getFigureHolder(), mTempPaint);
         //------------------------------------------------------------------------------------------
 
         //SCORE BOARD
+        mTempPaint.setColor(Color.WHITE);
         mTempPaint.setAlpha(450);
         float middleY=(mGameData.getScoreBoardConstraint().right+mGameData.getScoreBoardConstraint().left)/2;
         float middleX=(mGameData.getScoreBoardConstraint().bottom+mGameData.getScoreBoardConstraint().top)*(float)0.70;
@@ -140,6 +166,10 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         mTempPaint.setTextSize(250);
         canvas.drawText(mGameData.getSeconds_turn()+"",mTempRect.right/2-72,mTempRect.bottom/2+80,mTempPaint);
 
+
+        //Nets
+        mTempPaint.setAlpha(1000);
+        canvas.drawBitmap(nets, null, mGameData.getFieldConstraint(), mTempPaint);
     }
 
 
@@ -155,11 +185,12 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         getDrawingRect(rect);
         mGameData.setFieldConstraint( new RectF(rect.left,rect.top,rect.right,rect.bottom));
         mGameData.setScoreBoardConstraint( new RectF(rect.right*(float)0.20,2,rect.right*(float)0.80,rect.bottom*(float)0.16));
+        mGameData.setGoalConstraints(new RectF(rect.left,(rect.bottom+rect.top)*0.36f,(rect.left + rect.right)*0.061f,(rect.bottom+rect.top)*0.64f),new RectF((rect.left + rect.right)*0.939f,(rect.bottom+rect.top)*0.36f,rect.right,(rect.bottom+rect.top)*0.64f));
 
         Bitmap background = BitmapFactory.decodeResource(getResources(), StaticValues.field_res[gameActivity.getSettings_fieldType()]);
         setImageBitmap(Bitmap.createScaledBitmap(background, rect.right-rect.left, rect.bottom-rect.top, false));
 
-
+        startThread();
     }
 
 
