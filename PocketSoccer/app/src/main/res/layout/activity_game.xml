@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,31 +7,37 @@
     android:orientation="vertical"
     tools:context=".GameActivity">
 
-    <EditText
-        android:id="@+id/edit_test_1"
+    <com.example.markohudomal.pocketsoccer.game.CustomImageView
+        android:id="@+id/custom_image_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="player 1"
-        android:layout_margin="10dp"
-        android:textSize="20sp"/>
-    <EditText
-        android:id="@+id/edit_test_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:layout_margin="10dp"
-        android:hint="player 2"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
         />
-    <Button
-        android:layout_width="match_parent"
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="save vals"
-        android:onClick="TEST_saveVal"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="End Game"
-        android:onClick="onGameEnd"/>
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        card_view:cardCornerRadius="4dp"
+        >
+
+        <TextView
+            android:id="@+id/endMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginStart="8dp"
+            android:text="Test"
+            android:textAlignment="center"
+            android:textSize="35sp"
+            android:layout_marginLeft="8dp" />
+    </android.support.v7.widget.CardView>
+
+
+
+</android.support.constraint.ConstraintLayout>
