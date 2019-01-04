@@ -429,7 +429,7 @@ public class GameData {
         gameActivity.setName1(environmentData.name1);
         gameActivity.setName2(environmentData.name2);
         gameActivity.setBot1(environmentData.bot1);
-        gameActivity.setBot1(environmentData.bot2);
+        gameActivity.setBot2(environmentData.bot2);
         gameActivity.setFlag1(environmentData.flag1);
         gameActivity.setFlag2(environmentData.flag2);
 

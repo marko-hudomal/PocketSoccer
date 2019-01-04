@@ -51,7 +51,7 @@ public class Controller {
                     temp.setSelected(true);
                 }
             }
-        }else if (mImageData.getPlayer_turn()==1&& !mViewInterface.isBot2())
+        }else if (mImageData.getPlayer_turn()==1 && !mViewInterface.isBot2())
         {
             for(int i=0;i<mImageData.getPlayer2_balls().size();i++)
             {

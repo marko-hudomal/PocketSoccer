@@ -81,12 +81,21 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         boolean paused_game = sharedPreferencesResume.getBoolean("paused_game", false);
-        Log.d("MY_LOG",sharedPreferencesResume.getBoolean("paused_game", false)+"");
+        Log.d("MY_LOG",sharedPreferencesResume.getBoolean("onResume: paused_game:", false)+"");
+        CardView cardResume=findViewById(R.id.card_resume);
         if (paused_game)
         {
-            CardView cardResume=findViewById(R.id.card_resume);
             cardResume.setAlpha(1.0f);
+        }else
+        {
+            cardResume.setAlpha(0.6f);
         }
     }
 

@@ -397,6 +397,6 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("MY_LOG",">>onResume");
+
     }
 }
