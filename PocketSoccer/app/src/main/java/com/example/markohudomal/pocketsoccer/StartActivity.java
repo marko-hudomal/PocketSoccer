@@ -86,6 +86,8 @@ public class StartActivity extends AppCompatActivity {
         intent.putExtra("start_flag1",flag_res_iter1);
         intent.putExtra("start_flag2",flag_res_iter2);
         startActivity(intent);
+
+        finish();
     }
 
     public void onFabL1(View view)

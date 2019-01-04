@@ -9,13 +9,15 @@ public class GameThread extends HandlerThread {
     public interface ThreadListener{
         public void secondPassed();
         public void updateFieldState();
-
+        public boolean tryPlayTurn(int player);
         public void endThisGame();
+        public int getSpeed();
     }
     private ThreadListener threadListener;
     private boolean isRunning = false;
     private long lastTime = 0;
     private long lastTime2 = 0;
+
 
     public GameThread(String name, int priority) {
         super(name, priority);
@@ -32,8 +34,10 @@ public class GameThread extends HandlerThread {
         //GAME
         lastTime = System.currentTimeMillis();
         lastTime2 = System.currentTimeMillis();
+        int b=0;
 
         while (isRunning) {
+
 
             //Update on second
             final long currentTime = System.currentTimeMillis();
@@ -41,6 +45,12 @@ public class GameThread extends HandlerThread {
                 if (threadListener!=null)
                 {
                     threadListener.secondPassed();
+                    b++;
+                    if (b>=StaticValues.SecondsTurn/2){
+                        if (!threadListener.tryPlayTurn(0))
+                            threadListener.tryPlayTurn(1);
+                        b=0;
+                    }
                     //Log.d("MY_LOG","listener: second tick, "+(++i));
                 }
 
@@ -48,7 +58,15 @@ public class GameThread extends HandlerThread {
             }
             //Update on some time
             final long currentTime2 = System.currentTimeMillis();
-            if (currentTime2 - lastTime2 >= StaticValues.refreshRate) {
+            int d=1;
+            switch (threadListener.getSpeed())
+            {
+                case 4: d=1;    break;
+                case 3: d=2;    break;
+                case 2: d=10;   break;
+                case 1: d=20;   break;
+            }
+            if (currentTime2 - lastTime2 >= (StaticValues.refreshRate*d)) {
                 if (threadListener!=null)
                 {
                     threadListener.updateFieldState();
@@ -72,6 +90,7 @@ public class GameThread extends HandlerThread {
         }
         threadListener.endThisGame();
     }
+
 
     public void setRunning(boolean isRunning) {
         this.isRunning = isRunning;

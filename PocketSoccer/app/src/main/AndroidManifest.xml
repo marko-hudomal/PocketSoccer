@@ -40,7 +40,8 @@
         <activity
             android:name=".StatisticsDuelActivity"
             android:label="Statistics"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".GameActivity"
             android:theme="@style/StartTheme"
             android:screenOrientation="landscape"/>

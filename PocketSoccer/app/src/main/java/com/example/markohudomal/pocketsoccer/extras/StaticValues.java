@@ -6,9 +6,9 @@ import com.example.markohudomal.pocketsoccer.R;
 
 public class StaticValues {
     public static int Default_fieldType=0;//Grass field
-    public static int Default_gameEndType=0;//Time
-    public static int Default_gameEndVal=30;//30 sec
-    public static int Default_gameSpeed=1;//Speed 1x
+    public static int Default_gameEndType=1;//Score
+    public static int Default_gameEndVal=3;//3 goals
+    public static int Default_gameSpeed=3;//Speed 3x - Normal
 
     public static String COLOR_WINNER1="#ffa700";
     public static String COLOR_WINNER2="#ffa700";
@@ -27,7 +27,7 @@ public class StaticValues {
     public static int endPause=3;
 
     public static float speedChange=0.1f;
-    public static int refreshRate=10;
+    public static int refreshRate=5;
     public static float scaleValue=18.0f;
     public static float limitSpeed=40;
 

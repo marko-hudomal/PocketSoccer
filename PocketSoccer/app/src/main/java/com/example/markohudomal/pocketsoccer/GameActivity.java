@@ -29,6 +29,7 @@ import com.example.markohudomal.pocketsoccer.game.GameThread;
 import java.util.Date;
 
 public class GameActivity  extends AppCompatActivity implements View.OnTouchListener, Controller.ViewInterface {
+    private boolean resume_game;
 
     private Controller mController;
 
@@ -40,6 +41,7 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
 
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferencesResume;
 
     private MyViewModel mViewModel;
 
@@ -65,6 +67,8 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
     public MediaPlayer click;
     public MediaPlayer crowd;
     public MediaPlayer bounce;
+    public MediaPlayer whistle;
+    public MediaPlayer golf_hit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +79,14 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
         click = MediaPlayer.create(this, R.raw.click3);
         crowd = MediaPlayer.create(this, R.raw.crowd);
         bounce = MediaPlayer.create(this, R.raw.bounce);
+        whistle = MediaPlayer.create(this, R.raw.whistle);
+        golf_hit = MediaPlayer.create(this, R.raw.golf_hit);
 
         //All values----------------------------------------------------------------------------------------------
         //SharedPreferences=======================================================================================
         sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
+        sharedPreferencesResume = getSharedPreferences("game_data",MODE_PRIVATE);
+
         int set = sharedPreferences.getInt("values_set", -1);
         switch (set) {
             //Default values
@@ -126,7 +134,8 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
         Log.d("MY_LOG", "flag2: " + flag2);
         Log.d("MY_LOG", "----------------------------------------");
         //===========================================================================================================
-
+        resume_game=intent.getBooleanExtra("resume_game",false);
+        //===========================================================================================================
         //Initalization==================================================================================================================================
         //ModelView
         ViewModelProvider provider = ViewModelProviders.of(this);
@@ -151,10 +160,19 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         mCustomImageView.setDisplayDensity(metrics.densityDpi);
+
+        whistle.start();
         //==========================================================================================
     }
 
-    public void onGameEnd(View view) {
+    public void endThisGame() {
+        whistle.start();
+
+        editor = sharedPreferencesResume.edit();
+        editor.putBoolean("paused_game", false);
+        Log.d("MY_LOG","game paused deleted");
+        editor.commit();
+
         score1 = mCustomImageView.getGameData().getGoals1();
         score2 = mCustomImageView.getGameData().getGoals2();
 
@@ -184,7 +202,9 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
         mViewModel.insertGame(new Game(name1, name2, score1, score2, new Date()));
         Log.d("MY_LOG", "here database update ends");
     }
-
+    public void playHitSound(){
+        golf_hit.start();
+    }
     public int getBackgorundImageId() {
         return StaticValues.field_res[settings_fieldType % StaticValues.field_res.length];
     }
@@ -242,12 +262,6 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
 
     }
 
-    public void endThisGame() {
-
-        //Toast.makeText(this, "game is over!", Toast.LENGTH_SHORT).show();
-        //finish();
-        onGameEnd(null);
-    }
     //=============================================================================================
 
     private GameThread mThread;
@@ -300,6 +314,13 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
         this.name2 = name2;
     }
 
+    public boolean isBot(int player)
+    {
+        if (player==0 && bot1) return true;
+        if (player==1 && bot2) return true;
+        return false;
+    }
+
     public boolean isBot1() {
         return bot1;
     }
@@ -348,7 +369,34 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
         this.score2 = score2;
     }
 
+    public boolean isResume_game() {
+        return resume_game;
+    }
+
+    public void setResume_game(boolean resume_game) {
+        this.resume_game = resume_game;
+    }
+
     public CustomImageView getmCustomImageView() {
         return mCustomImageView;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("MY_LOG",">>onSaveInstanceState");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("MY_LOG",">>onPause");
+        mCustomImageView.getGameData().saveAll();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MY_LOG",">>onResume");
     }
 }

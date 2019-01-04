@@ -73,6 +73,18 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         mThread.setListener(this);
         mThread.setRunning(true);
     }
+    public void refreshFlags()
+    {
+        player1= BitmapFactory.decodeResource(getResources(), StaticValues.ball_res[gameActivity.getFlag1()]);
+        player2= BitmapFactory.decodeResource(getResources(), StaticValues.ball_res[gameActivity.getFlag2()]);
+    }
+    public void refreshBackground()
+    {
+        Bitmap background = BitmapFactory.decodeResource(getResources(), StaticValues.field_res[gameActivity.getSettings_fieldType()]);
+
+        getDrawingRect(mTempRect);
+        setImageBitmap(Bitmap.createScaledBitmap(background, mTempRect.right-mTempRect.left, mTempRect.bottom-mTempRect.top, false));
+    }
     public void startThread()
     {
         mThread.start();
@@ -164,7 +176,7 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
             //Goals game
             mTempPaint.setAlpha(200);
             mTempPaint.setTextSize(25);
-            canvas.drawText("needed goals: "+mGameData.getEndVal(),middleY*(float)0.92,35,mTempPaint);
+            canvas.drawText("goals needed: "+mGameData.getEndVal(),middleY*(float)0.92,35,mTempPaint);
         }
         //----------------------------------------------------------------------------------------------------
         //Seconds turn
@@ -223,7 +235,6 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
                }
            }
            mGameData.decSecTurn();
-
            invalidate();
     }
 
@@ -236,10 +247,23 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         }
     }
 
+    @Override
+    public boolean tryPlayTurn(int player) {
+        if (gameActivity.isBot(player))
+            return mGameData.botPlays(player);
+
+        return false;
+    }
+
 
     @Override
     public void endThisGame() {
         gameActivity.endThisGame();
+    }
+
+    @Override
+    public int getSpeed() {
+        return gameActivity.getSettings_gameSpeed();
     }
 
 

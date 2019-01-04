@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,13 +18,20 @@ import android.widget.ImageView;
 
 import com.example.markohudomal.pocketsoccer.extras.StaticValues;
 
+//Dodati
+//Nets line
+//Limit lopte jedne od drugih
+//Menjanje sa ekrana na ekran
+
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferencesResume;
 
     public static final int START_GAME = 201;
-    public static final int SETTINGS = 202;
-    public static final int STATISTICS = 203;
+    public static final int RESUME_GAME = 202;
+    public static final int SETTINGS = 203;
+    public static final int STATISTICS = 204;
 
     private ImageView imageLogo;
     private CardView cardMenu;
@@ -50,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         //SharedPreferences
         sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
+        sharedPreferencesResume = getSharedPreferences("game_data", MODE_PRIVATE);
+
         int set = sharedPreferences.getInt("values_set", -1);
         switch(set)
         {
@@ -71,7 +81,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-
+        boolean paused_game = sharedPreferencesResume.getBoolean("paused_game", false);
+        Log.d("MY_LOG",sharedPreferencesResume.getBoolean("paused_game", false)+"");
+        if (paused_game)
+        {
+            CardView cardResume=findViewById(R.id.card_resume);
+            cardResume.setAlpha(1.0f);
+        }
     }
 
     public void onItemClick(View view)
@@ -95,11 +111,21 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.card_start:
                 intent.setClass(this,StartActivity.class);
+                intent.putExtra("resume_game",false);
                 startActivityForResult(intent,START_GAME);
+                //finish();
                 break;
             case R.id.card_resume:
-                intent.setClass(this,MainActivity.class);
-                startActivityForResult(intent,START_GAME);
+                intent.setClass(this,GameActivity.class);
+                intent.putExtra("resume_game",true);
+                intent.putExtra("start_name1","aa");
+                intent.putExtra("start_name2","bb");
+                intent.putExtra("start_bot1",false);
+                intent.putExtra("start_bot2",false);
+                intent.putExtra("start_flag1",0);
+                intent.putExtra("start_flag2",1);
+                startActivityForResult(intent,RESUME_GAME);
+                //finish();
                 break;
             case R.id.card_statistics:
                 intent.setClass(this,StatisticsActivity.class);
@@ -110,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,SETTINGS);
                 break;
         }
-
     }
     public void onImageClick(View view)
     {

@@ -2,6 +2,7 @@ package com.example.markohudomal.pocketsoccer.game.gamedata;
 
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.util.Log;
 
 import com.example.markohudomal.pocketsoccer.extras.StaticValues;
 
@@ -40,6 +41,21 @@ public class Ball{
         mFigureHolder.bottom = mFigurePosition.y + halfHeight;
     }
 
+    public BallData extractData()
+    {
+        //Log.d("MY_LOG","real position: "+mFigurePosition.x+"-"+mFigurePosition.y);
+        return new BallData(selected,radius,mFigurePosition.x,mFigurePosition.y,moving,d_speed,vectorX,vectorY);
+    }
+    public void setData(BallData ballData)
+    {
+        selected=ballData.selected;
+        radius=ballData.radius;
+        mFigurePosition=new PointF(ballData.mFigurePosition_x,ballData.mFigurePosition_y);
+        moving=ballData.moving;
+        d_speed=ballData.d_speed;
+        vectorX=ballData.vectorX;
+        vectorY=ballData.vectorY;
+    }
     public float distance(Ball p)
     {
         float dx=p.mFigurePosition.x-this.mFigurePosition.x;
@@ -47,8 +63,9 @@ public class Ball{
 
         return (float)Math.sqrt(dx*dx+dy*dy);
     }
-    public void hitOtherBallVector()
+    public boolean hitOtherBallVector()
     {
+        boolean result=false;
         ArrayList<Ball> current=null;
         for(int k=-1;k<2;k++)
         {
@@ -77,14 +94,29 @@ public class Ball{
                     //If hit
                     if (distance(temp)<=(this.radius/2)+(temp.radius/2))
                     {
+                        result=true;
                         float pom_x=this.mFigurePosition.x-temp.mFigurePosition.x;
                         float pom_y=this.mFigurePosition.y-temp.mFigurePosition.y;
-                        float odnos=Math.abs(pom_x/pom_y);
-                        float jacina=(float)Math.sqrt((vectorX)*(vectorX)+(vectorY)*(vectorY));
 
-                        float resultant_y=jacina/(float)Math.sqrt(odnos*odnos+1);
-                        float resultant_x=resultant_y*odnos;
+                        float resultant_y;
+                        float resultant_x;
+                        if (pom_y==0)
+                        {
+                            //Log.d("MY_LOG","OVDE JE PROBLEM BROJ1!!!!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                            float jacina=(float)Math.sqrt((vectorX)*(vectorX)+(vectorY)*(vectorY));
 
+                            resultant_y=0;
+                            resultant_x=jacina;
+
+                        }else
+                        {
+                            float odnos=Math.abs(pom_x/pom_y);
+                            float jacina=(float)Math.sqrt((vectorX)*(vectorX)+(vectorY)*(vectorY));
+
+                            resultant_y=jacina/(float)Math.sqrt(odnos*odnos+1);
+                            resultant_x=resultant_y*odnos;
+
+                        }
                         if (pom_x<0)
                         {
                             resultant_x=(-resultant_x);
@@ -93,6 +125,7 @@ public class Ball{
                         {
                             resultant_y=(-resultant_y);
                         }
+
                         this.vectorX+=StaticValues.myVectorDecipation*resultant_x;
                         this.vectorY+=StaticValues.myVectorDecipation*resultant_y;
                         //this.setMoving(true);
@@ -104,6 +137,7 @@ public class Ball{
             }
 
         }
+        return result;
     }
     public boolean hitWallVector()
     {

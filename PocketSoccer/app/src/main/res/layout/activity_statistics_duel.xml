@@ -38,7 +38,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
 
-            android:text="Total Score:"
+            android:text="Overall Duel Score:"
             android:textAlignment="center"
             android:textColor="@android:color/darker_gray"
 

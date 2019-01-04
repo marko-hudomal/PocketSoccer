@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.example.markohudomal.pocketsoccer.database.model.BundleAwareViewModel
 import com.example.markohudomal.pocketsoccer.database.model.MyViewModel;
 import com.example.markohudomal.pocketsoccer.database.view.GameAdapter;
 import com.example.markohudomal.pocketsoccer.database.view.PairAdapter;
+import com.example.markohudomal.pocketsoccer.extras.StaticValues;
 
 import java.util.List;
 
@@ -85,6 +87,16 @@ public class StatisticsDuelActivity extends AppCompatActivity {
                     textBottomName1.setText(pair.getName1());
                     textBottomName2.setText(pair.getName2());
                     textBottomScore.setText(pair.getWins1()+" : "+pair.getWins2());
+
+                    if (pair.getWins1()>pair.getWins2())
+                    {
+                        textBottomName1.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER1));
+                        textBottomName2.setTextColor(Color.WHITE);
+                    }else if (pair.getWins2()>pair.getWins1()){
+                        textBottomName2.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER1));
+                        textBottomName1.setTextColor(Color.WHITE);
+                    }
+
                 }else
                 {
                     textBottomName1.setText("");

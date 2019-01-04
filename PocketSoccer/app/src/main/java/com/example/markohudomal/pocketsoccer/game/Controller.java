@@ -13,6 +13,9 @@ public class Controller {
 
     public interface ViewInterface {
         void updateView();
+        void playHitSound();
+        boolean isBot1();
+        boolean isBot2();
     }
 
 
@@ -35,7 +38,7 @@ public class Controller {
     public void onFirstTouchDown(float x, float y) {
         ball1_pressed=-1;
         ball2_pressed=-1;
-        if (mImageData.getPlayer_turn()==0)
+        if (mImageData.getPlayer_turn()==0 && !mViewInterface.isBot1())
         {
             for(int i=0;i<mImageData.getPlayer1_balls().size();i++)
             {
@@ -48,7 +51,7 @@ public class Controller {
                     temp.setSelected(true);
                 }
             }
-        }else
+        }else if (mImageData.getPlayer_turn()==1&& !mViewInterface.isBot2())
         {
             for(int i=0;i<mImageData.getPlayer2_balls().size();i++)
             {
@@ -72,7 +75,7 @@ public class Controller {
         if (ball1_pressed!=-1)
         {
             Ball temp = mImageData.getPlayer1_balls().get(ball1_pressed);
-            if (mImageData.getPlayer_turn()==0)
+            if (mImageData.getPlayer_turn()==0 && !mViewInterface.isBot1())
             {
                 //temp.setMoving(true);
                 temp.vectorX=x-x_pressed;
@@ -82,6 +85,7 @@ public class Controller {
 
                 Log.d("MY_LOG","2speed set="+temp.getSpeed());
                 mImageData.nextPlayer();
+                //mViewInterface.playHitSound();
                 mViewInterface.updateView();
             }
             temp.setSelected(false);
@@ -89,7 +93,7 @@ public class Controller {
         if (ball2_pressed!=-1)
         {
             Ball temp = mImageData.getPlayer2_balls().get(ball2_pressed);
-            if (mImageData.getPlayer_turn()==1)
+            if (mImageData.getPlayer_turn()==1&& !mViewInterface.isBot2())
             {
                 //temp.setMoving(true);
                 temp.vectorX=x-x_pressed;
@@ -99,6 +103,7 @@ public class Controller {
 
                 Log.d("MY_LOG","2speed set="+temp.getSpeed());
                 mImageData.nextPlayer();
+                //mViewInterface.playHitSound();
                 mViewInterface.updateView();
             }
             temp.setSelected(false);
