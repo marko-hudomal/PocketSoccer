@@ -95,6 +95,7 @@ public class Ball{
                     if (distance(temp)<=(this.radius/2)+(temp.radius/2))
                     {
                         result=true;
+
                         float pom_x=this.mFigurePosition.x-temp.mFigurePosition.x;
                         float pom_y=this.mFigurePosition.y-temp.mFigurePosition.y;
 
@@ -102,7 +103,7 @@ public class Ball{
                         float resultant_x;
                         if (pom_y==0)
                         {
-                            //Log.d("MY_LOG","OVDE JE PROBLEM BROJ1!!!!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                            //Log.d("MY_LOG","deljenje nulom ispravljen problem");
                             float jacina=(float)Math.sqrt((vectorX)*(vectorX)+(vectorY)*(vectorY));
 
                             resultant_y=0;
@@ -126,6 +127,8 @@ public class Ball{
                             resultant_y=(-resultant_y);
                         }
 
+                        //this.mFigurePosition.x-=this.vectorX;
+                        //this.mFigurePosition.y-=this.vectorY;
                         this.vectorX+=StaticValues.myVectorDecipation*resultant_x;
                         this.vectorY+=StaticValues.myVectorDecipation*resultant_y;
                         //this.setMoving(true);
@@ -172,6 +175,70 @@ public class Ball{
         }
         return result;
     }
+    public boolean hitGoalVector(){
+        float half = radius / 2 ;
+        boolean result=false;
+        //LEFT GOAL TOP TOP||BOTTOM
+
+            //GOAL1----------------------------------------------------------------------------------
+            //Top Bar
+            RectF rect1_T_TB = new RectF(0,myGameData.getmGoal1Constraint().top-half,myGameData.getmGoal1Constraint().right+0,myGameData.getmGoal1Constraint().top+half);
+            if (insideBounds(getFigurePosition(),rect1_T_TB) || insideCircle(new PointF(myGameData.getmGoal1Constraint().right,myGameData.getmGoal1Constraint().top),half,getFigurePosition())){
+//                if (vectorY>0){
+//                    getFigurePosition().y=myGameData.getmGoal1Constraint().top-half;
+//                }else{
+//                    getFigurePosition().y=myGameData.getmGoal1Constraint().top+half;
+//                }
+                vectorY=-vectorY;
+            }
+            RectF rect1_T_LR = new RectF(myGameData.getmGoal1Constraint().right,myGameData.getmGoal1Constraint().top-half,myGameData.getmGoal1Constraint().right+half,myGameData.getmGoal1Constraint().top+half);
+            if (vectorX<0 && insideCircle(new PointF(myGameData.getmGoal1Constraint().right,myGameData.getmGoal1Constraint().top),half,getFigurePosition())){
+                //Log.d("Wall_Log","g1Hit1.2");
+                vectorX=-vectorX;
+            }
+            //Bottom Bar
+            RectF rect1_B_TB = new RectF(0,myGameData.getmGoal1Constraint().bottom-half,myGameData.getmGoal1Constraint().right+0,myGameData.getmGoal1Constraint().bottom+half);
+            if (insideBounds(getFigurePosition(),rect1_B_TB) || insideCircle(new PointF(myGameData.getmGoal1Constraint().right,myGameData.getmGoal1Constraint().bottom),half,getFigurePosition())){
+//                if (vectorY>0){
+//                    getFigurePosition().y=myGameData.getmGoal1Constraint().bottom-half;
+//                }else{
+//                    getFigurePosition().y=myGameData.getmGoal1Constraint().bottom+half;
+//                }
+                vectorY=-vectorY;
+            }
+            RectF rect1_B_LR = new RectF(myGameData.getmGoal1Constraint().right,myGameData.getmGoal1Constraint().bottom-half,myGameData.getmGoal1Constraint().right+half,myGameData.getmGoal1Constraint().bottom+half);
+            if (vectorX<0 && insideCircle(new PointF(myGameData.getmGoal1Constraint().right,myGameData.getmGoal1Constraint().bottom),half,getFigurePosition())){
+                //Log.d("Wall_Log","g1Hit2.2");
+                vectorX=-vectorX;
+            }
+            //---------------------------------------------------------------------------------------
+
+        //GOAL2----------------------------------------------------------------------------------
+        //Top Bar
+        RectF rect2_T_TB = new RectF(myGameData.getmGoal2Constraint().left-half,myGameData.getmGoal2Constraint().top-half,myGameData.getmGoal2Constraint().right,myGameData.getmGoal2Constraint().top+half);
+        if (insideBounds(getFigurePosition(),rect2_T_TB) || insideCircle(new PointF(myGameData.getmGoal2Constraint().left,myGameData.getmGoal2Constraint().top),half,getFigurePosition())){
+            //Log.d("Wall_Log","g2Hit1.1");
+            vectorY=-vectorY;
+        }
+        RectF rect2_T_LR = new RectF(myGameData.getmGoal2Constraint().left-half,myGameData.getmGoal2Constraint().top-half,myGameData.getmGoal2Constraint().left,myGameData.getmGoal2Constraint().top+half);
+        if (vectorX>0 && insideCircle(new PointF(myGameData.getmGoal2Constraint().left,myGameData.getmGoal2Constraint().top),half,getFigurePosition())){
+            //Log.d("Wall_Log","g2Hit1.2");
+            vectorX=-vectorX;
+        }
+        //Bottom Bar
+        RectF rect2_B_TB = new RectF(myGameData.getmGoal2Constraint().left-half,myGameData.getmGoal2Constraint().bottom-half,myGameData.getmGoal2Constraint().right,myGameData.getmGoal2Constraint().bottom+half);
+        if (insideBounds(getFigurePosition(),rect2_B_TB) || insideCircle(new PointF(myGameData.getmGoal2Constraint().left,myGameData.getmGoal2Constraint().bottom),half,getFigurePosition())){
+            //Log.d("Wall_Log","g2Hit2.1");
+            vectorY=-vectorY;
+        }
+        RectF rect2_B_LR = new RectF(myGameData.getmGoal2Constraint().left-half,myGameData.getmGoal2Constraint().bottom-half,myGameData.getmGoal2Constraint().left,myGameData.getmGoal2Constraint().bottom+half);
+        if (vectorX>0 && insideCircle(new PointF(myGameData.getmGoal2Constraint().left,myGameData.getmGoal2Constraint().bottom),half,getFigurePosition())){
+            //Log.d("Wall_Log","g2Hit2.2");
+            vectorX=-vectorX;
+        }
+        //---------------------------------------------------------------------------------------
+        return result;
+    }
     public void simpleMove()
     {
         //Should Move
@@ -179,6 +246,7 @@ public class Ball{
 
             float halfWidth = radius/2 ;
             float halfHeight = radius/2;
+
             getFigurePosition().x += vectorX;
             getFigurePosition().y += vectorY;
             mFigurePosition.x = myGameData.limitX(mFigurePosition.x, halfWidth);
@@ -348,5 +416,21 @@ public class Ball{
             return 1;
 
         return -1;
+    }
+    public static boolean insideBounds(PointF point,RectF rect){
+        if (rect.top<=point.y && rect.bottom>=point.y && rect.left<=point.x  && rect.right>=point.x){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public static boolean insideCircle(PointF point, float dist,PointF circlePoint){
+        float dx=point.x-circlePoint.x;
+        float dy=point.y-circlePoint.y;
+        if (dist>Math.sqrt(dx*dx+dy*dy)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

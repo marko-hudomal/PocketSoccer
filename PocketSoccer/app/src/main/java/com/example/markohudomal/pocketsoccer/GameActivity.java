@@ -188,10 +188,11 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
         intent.putExtra("name2", name2);
         Log.d("MY_LOG", "FINISHED GAME: name1: " + name1 + ", name2: " + name2);
         this.startActivity(intent);
+        finish();
     }
 
     private void updatedDatabaseForThisGame(String name1, String name2, int score1, int score2) {
-        Log.d("MY_LOG", "here database update starts");
+        //Log.d("MY_LOG", "here database update starts");
         String whoWon = "";
         if (score1 > score2)
             whoWon = name1;
@@ -200,7 +201,7 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
 
         mViewModel.updatePairWin(name1, name2, whoWon);
         mViewModel.insertGame(new Game(name1, name2, score1, score2, new Date()));
-        Log.d("MY_LOG", "here database update ends");
+        Log.d("MY_LOG", "database update ends");
     }
     public void playHitSound(){
         golf_hit.start();

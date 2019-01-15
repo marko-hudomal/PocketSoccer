@@ -24,7 +24,7 @@ public class StaticValues {
     public static int ball_res[] = {R.drawable.ball_serbia,R.drawable.ball_lithuania,R.drawable.ball_italy,R.drawable.ball_france,R.drawable.ball_russia};
     public static int SecondsTurn=5;
     public static String colorWhoPlays="#ffc04c";
-    public static int endPause=3;
+    public static int endPause=1;
 
     public static float speedChange=0.1f;
     public static int refreshRate=5;

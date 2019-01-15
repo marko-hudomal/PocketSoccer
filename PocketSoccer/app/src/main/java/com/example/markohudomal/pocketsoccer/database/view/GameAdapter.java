@@ -96,9 +96,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
             if (game.getGoals1()>game.getGoals2())
             {
                 holder.nameView1.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER2));
+                holder.nameView2.setTextColor(Color.GRAY);
             }else
                 if (game.getGoals2()>game.getGoals1())
                 {
+                    holder.nameView1.setTextColor(Color.GRAY);
                     holder.nameView2.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER2));
                 }
 

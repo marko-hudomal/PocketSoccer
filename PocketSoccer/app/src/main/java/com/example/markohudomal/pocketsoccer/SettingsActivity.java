@@ -107,10 +107,12 @@ public class SettingsActivity extends AppCompatActivity {
 
                     if (radioGroup.getCheckedRadioButtonId()==R.id.radio_time)
                     {
+                        Log.d("my_log","progress0: "+progress);
                         seekBarEndGameText.setText(convertProgressToTime(progress)+" sec");
                         progress_last=progress;
                     }else
                     {
+                        Log.d("my_log","progress1: "+progress);
                         seekBarEndGameText.setText(convertProgressToScore(progress)+" goals");
                         progress_last=progress;
                     }
@@ -187,11 +189,16 @@ public class SettingsActivity extends AppCompatActivity {
         if (gameEndType==0)
         {
             progress_last=convertTimeToProgress(gameEndVal);
+            seekBarEndGameText.setText(gameEndVal+" sec");
+            //Log.d("my_log","gameval0: "+gameEndVal);
         }
         else if (gameEndType==1)
         {
             progress_last=convertScoreToProgress(gameEndVal);
+            seekBarEndGameText.setText(gameEndVal+" goals");
+            //Log.d("my_log","gameval1: "+gameEndVal);
         }
+        //seekBarEndGameText.setText(gameEndVal+"");
         seekBarEndGame.setProgress(progress_last);
 
         //gameSpeed

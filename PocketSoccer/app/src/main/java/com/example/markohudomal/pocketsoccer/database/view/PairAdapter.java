@@ -106,9 +106,11 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
             if (pair.getWins1()>pair.getWins2())
             {
                 holder.nameView1.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER1));
+                holder.nameView2.setTextColor(Color.GRAY);
             }else
             if (pair.getWins2()>pair.getWins1())
             {
+                holder.nameView1.setTextColor(Color.GRAY);
                 holder.nameView2.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER1));
             }
 

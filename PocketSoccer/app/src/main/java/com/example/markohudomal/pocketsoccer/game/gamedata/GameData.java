@@ -109,6 +109,7 @@ public class GameData {
             for (int i = 0; i < current.size(); i++) {
                 Ball temp = current.get(i);
                 temp.simpleMove();
+                temp.hitGoalVector();
                 if (temp.hitWallVector())
                     gameActivity.bounce.start();
                 if(temp.hitOtherBallVector())
@@ -116,6 +117,7 @@ public class GameData {
             }
         }
         football.simpleMove();
+        football.hitGoalVector();
         if (football.hitWallVector())
             gameActivity.bounce.start();
         if (football.hitOtherBallVector())
@@ -125,6 +127,7 @@ public class GameData {
             goals2++;
             initBalls();
             gameActivity.crowd.start();
+            player_turn=0;
             if (!isTimeGame() && ((endVal==goals1) || (endVal==goals2)))
             {
                 gameOver=true;
@@ -134,7 +137,7 @@ public class GameData {
             goals1++;
             initBalls();
             gameActivity.crowd.start();
-            gameActivity.crowd.start();
+            player_turn=1;
             if (!isTimeGame() && ((endVal==goals1) || (endVal==goals2)))
             {
                 gameOver=true;

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import com.example.markohudomal.pocketsoccer.extras.StaticValues;
 
 //Dodati
+
 //Nets line
 //Limit lopte jedne od drugih
 //Menjanje sa ekrana na ekran
