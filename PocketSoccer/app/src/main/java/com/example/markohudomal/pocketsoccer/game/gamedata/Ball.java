@@ -389,6 +389,29 @@ public class Ball{
     {
         if (getSpeed()>limit)
         {
+            //DELJENJE SA NULOM GRESKA--------------------------------------------------------------
+            if (vectorY==0){
+                if (vectorX<0)
+                {
+                    vectorX=(-limit);
+                }else
+                {
+                    vectorX=(limit);
+                }
+                return;
+            }
+            if (vectorX==0){
+                if (vectorY<0)
+                {
+                    vectorY=(-limit);
+                }else
+                {
+                    vectorY=(limit);
+                }
+                return;
+            }
+            //--------------------------------------------------------------------------------------
+
             float n = vectorX/vectorY;
 
             float new_y=(float) Math.sqrt( (limit*limit)/ (n*n+1) );
