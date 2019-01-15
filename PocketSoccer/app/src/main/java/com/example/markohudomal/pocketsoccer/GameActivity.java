@@ -263,6 +263,7 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
 
     }
 
+
     //=============================================================================================
 
     private GameThread mThread;
@@ -391,8 +392,10 @@ public class GameActivity  extends AppCompatActivity implements View.OnTouchList
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("MY_LOG",">>onPause");
+        mCustomImageView.stopThread();
         mCustomImageView.getGameData().saveAll();
+        finish();
+        Log.d("my_log","Game onPause: Calling finish()");
     }
 
     @Override

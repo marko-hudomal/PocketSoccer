@@ -266,5 +266,7 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         return gameActivity.getSettings_gameSpeed();
     }
 
-
+    public void stopThread(){
+        mThread.forceStop();
+    }
 }

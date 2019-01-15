@@ -112,6 +112,9 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
             {
                 holder.nameView1.setTextColor(Color.GRAY);
                 holder.nameView2.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER1));
+            }else{
+                holder.nameView1.setTextColor(Color.DKGRAY);
+                holder.nameView2.setTextColor(Color.DKGRAY);
             }
 
             //SET PAIR TO HOLDER

@@ -97,12 +97,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
             {
                 holder.nameView1.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER2));
                 holder.nameView2.setTextColor(Color.GRAY);
-            }else
-                if (game.getGoals2()>game.getGoals1())
-                {
-                    holder.nameView1.setTextColor(Color.GRAY);
-                    holder.nameView2.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER2));
-                }
+            }else if (game.getGoals2()>game.getGoals1())
+            {
+                holder.nameView1.setTextColor(Color.GRAY);
+                holder.nameView2.setTextColor(Color.parseColor(StaticValues.COLOR_WINNER2));
+            }else{
+                holder.nameView1.setTextColor(Color.DKGRAY);
+                holder.nameView2.setTextColor(Color.DKGRAY);
+            }
 
         } else {
             //holder.gameItemView1.setText("No data");

@@ -15,6 +15,7 @@ public class GameThread extends HandlerThread {
     }
     private ThreadListener threadListener;
     private boolean isRunning = false;
+    private boolean forceStop=false;
     private long lastTime = 0;
     private long lastTime2 = 0;
 
@@ -23,7 +24,10 @@ public class GameThread extends HandlerThread {
         super(name, priority);
     }
 
-
+    public void forceStop(){
+        forceStop=true;
+        isRunning=false;
+    }
     public void setListener(ThreadListener t)
     {
         threadListener=t;
@@ -77,6 +81,7 @@ public class GameThread extends HandlerThread {
             }
 
         }
+        if (forceStop==true) return;
         //END PAUSE
         int endRunning=StaticValues.endPause;
         while(endRunning>0)
