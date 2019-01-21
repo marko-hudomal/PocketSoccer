@@ -67,8 +67,8 @@ public class GameThread extends HandlerThread {
             {
                 case 4: d=1;    break;
                 case 3: d=2;    break;
-                case 2: d=10;   break;
-                case 1: d=20;   break;
+                case 2: d=4;    break;
+                case 1: d=6;   break;
             }
             if (currentTime2 - lastTime2 >= (StaticValues.refreshRate*d)) {
                 if (threadListener!=null)
